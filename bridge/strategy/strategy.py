@@ -4,7 +4,6 @@
 import math  # type: ignore
 from time import time  # type: ignore
 from typing import Optional
-
 from bridge import const
 from bridge.auxiliary import aux, fld, rbt  # type: ignore
 from bridge.const import State as GameStates
@@ -192,11 +191,24 @@ class Strategy:
         #     field.strategy_image.draw_line(g + field.allies[4].get_pos(), g*3000 + field.allies[4].get_pos())
         #     field.strategy_image.draw_line(b + field.allies[0].get_pos(), b*3000 + field.allies[0].get_pos())
         #     field.strategy_image.draw_circle(f, (255, 255, 255), 50)
+        
+        w = aux.point_on_line(field.ball.get_pos(), field.enemies[0].get_pos(), -1000)
+        l = aux.angle_to_point(field.enemies[0].get_pos(), field.ball.get_pos())
+        p = aux.angle_to_point(field.enemies[0].get_pos(), field.allies[0].get_pos())
+        y = aux.angle_to_point(field.enemies[0].get_pos(), field.allies[5].get_pos())
+        print(l, p, y)
+        r = (aux.point_on_line(field.allies[0].get_pos(), field.enemies[0].get_pos(), 300))
+        u = (aux.point_on_line(field.allies[5].get_pos(), field.enemies[0].get_pos(), 300))
+        if((y - l) > (l - p)):
+            actions[3] = Actions.GoToPointIgnore(r , (field.ball.get_pos() - field.allies[3].get_pos()).arg())
+            
+        else:
+            actions[3] = Actions.GoToPointIgnore(u , (field.ball.get_pos() - field.allies[3].get_pos()).arg())
+            
+            
 
-        c = (field.enemies[0].get_pos() - field.ball.get_pos()).unity()
-        j = aux.point_on_line(field.enemies[0].get_pos(), field.ball.get_pos(), 500)
-        actions[3] = Actions.GoToPointIgnore(j, 1)
-        field.strategy_image.draw_line(field.enemies[0].get_pos(), field.ball.get_pos()*5000)
+        
+        
             
             
 
