@@ -132,26 +132,30 @@ class Strategy:
         # field.strategy_image.draw_line(field.ball.get_pos(), field.enemies[4].get_pos())
         # field.strategy_image.draw_line(field.ball.get_pos(), field.enemies[5].get_pos())
 
-        list = [field.ally_goal.center_down, 
-                field.ally_goal.frw_down, 
-                field.ally_goal.frw, 
-                field.ally_goal.frw_up, 
-                field.ally_goal.center_up,
-                field.enemy_goal.center_down,
-                field.enemy_goal.frw_down,
-                field.enemy_goal.frw,
-                field.enemy_goal.frw_up,
-                field.enemy_goal.center_up,
-                ]
-        c = aux.find_nearest_point(field.allies[3].get_pos(), list)
-        if(self.i == 0):
-            actions[3] = Actions.GoToPointIgnore(field.ball.get_pos(), 1)
-            if((field.allies[3].get_pos() - field.ball.get_pos()).mag() < 100):
-                self.i = 1
-        if(self.i == 1):
-            actions[3] = Actions.GoToPointIgnore(c, 1)
-            if((field.allies[3].get_pos() - c).mag() < 10):
-                self.i = 0
+        # list = [field.ally_goal.center_down, 
+        #         field.ally_goal.frw_down, 
+        #         field.ally_goal.frw, 
+        #         field.ally_goal.frw_up, 
+        #         field.ally_goal.center_up,
+        #         field.enemy_goal.center_down,
+        #         field.enemy_goal.frw_down,
+        #         field.enemy_goal.frw,
+        #         field.enemy_goal.frw_up,
+        #         field.enemy_goal.center_up,
+        #         ]
+        # c = aux.find_nearest_point(field.allies[3].get_pos(), list)
+        # if(self.i == 0):
+        #     actions[3] = Actions.GoToPointIgnore(field.ball.get_pos(), 1)
+        #     field.strategy_image.draw_line(field.allies[3].get_pos(), field.ball.get_pos(), (200, 0, 0))
+        #     if((field.allies[3].get_pos() - field.ball.get_pos()).mag() < 200):
+        #         actions[3] = Actions.GoToPointIgnore(field.allies[3].get_pos(), 1)
+        #         self.i = 1
+        # if(self.i == 1):
+        #     actions[3] = Actions.GoToPointIgnore(c, 1)
+        #     field.strategy_image.draw_line(field.allies[3].get_pos(), c, (200, 0, 0))
+        #     if((field.allies[3].get_pos() - c).mag() < 10):
+        #         self.i = 0
+
                 # self.i = 1
                 # c = aux.dist(field.allies[3].get_pos(), field.ally_goal.center)
                 # d = aux.dist(field.allies[3].get_pos(), field.enemy_goal.center)
@@ -166,7 +170,35 @@ class Strategy:
                 #         if(field.allies[3].get_pos() - field.enemy_goal.center).mag() < 250:
                 #             actions[3] = Actions.GoToPointIgnore(field.allies[3].get_pos(), 1)
 
+        # c = field.enemies[0].get_angle()
+        # d = (aux.rotate(aux.Point(500, 0) , c)).unity()
+        
+        # a = field.allies[0].get_angle()
+        # b = (aux.rotate(aux.Point(500, 0) , a)).unity()
 
+        # r = field.allies[4].get_angle()
+        # g = (aux.rotate(aux.Point(500, 0) , r)).unity()
+        
+        # hdb = aux.get_line_intersection(d + field.enemies[0].get_pos(), d*500 + field.enemies[0].get_pos(), b + field.allies[0].get_pos(), b*500 + field.allies[0].get_pos(), "LL")
+        # hdg = aux.get_line_intersection(d + field.enemies[0].get_pos(), d*500 + field.enemies[0].get_pos(), g + field.allies[4].get_pos(), g*500 + field.allies[4].get_pos(), "LL")
+        # hgb = aux.get_line_intersection(g + field.allies[4].get_pos(), g*500 + field.allies[4].get_pos(), b + field.allies[0].get_pos(), b*500 + field.allies[0].get_pos(), "LL")
+        
+        # if hdb is not None and hdg is not None and hgb is not None:
+        #     f = (hdb + hdg + hgb)/3
+        #     field.strategy_image.draw_circle(hdb, (255, 255, 255), 50)
+        #     field.strategy_image.draw_circle(hdg, (255, 255, 255), 50)
+        #     field.strategy_image.draw_circle(hgb, (255, 255, 255), 50)
+        #     field.strategy_image.draw_line(d + field.enemies[0].get_pos(), d*3000 + field.enemies[0].get_pos())
+        #     field.strategy_image.draw_line(g + field.allies[4].get_pos(), g*3000 + field.allies[4].get_pos())
+        #     field.strategy_image.draw_line(b + field.allies[0].get_pos(), b*3000 + field.allies[0].get_pos())
+        #     field.strategy_image.draw_circle(f, (255, 255, 255), 50)
+
+        c = (field.enemies[0].get_pos() - field.ball.get_pos()).unity()
+        j = aux.point_on_line(field.enemies[0].get_pos(), field.ball.get_pos(), 500)
+        actions[3] = Actions.GoToPointIgnore(j, 1)
+        field.strategy_image.draw_line(field.enemies[0].get_pos(), field.ball.get_pos()*5000)
+            
+            
 
 
 
