@@ -105,21 +105,67 @@ class Strategy:
         #     if((field.allies[3].get_pos() - field.ally_goal.frw_down).mag() < 250):
         #         self.i = 0
         
-        c = (aux.dist(field.enemies[0].get_pos(), field.allies[0].get_pos()))/3
-        d = aux.point_on_line(field.allies[0].get_pos(), field.enemies[0].get_pos(), c)
-        print(c)
-        u = aux.rotate(d, 3.14/2)
+        # c = (field.allies[0].get_pos() - field.enemies[0].get_pos()).unity()
+        # u = aux.rotate(c*100, 3.14/3 *2) + field.allies[3].get_pos()
+        # if(self.i == 0):
+        #     actions[3] = Actions.GoToPointIgnore(u + field.allies[3].get_pos(), 1)
+        #     if((field.allies[3].get_pos() - (u + field.allies[3].get_pos())).mag() < 20):
+        #         u = aux.rotate(c*100, 3.14/3 * 4) + field.allies[3].get_pos()
+        #         self.i = 1
+        # if(self.i == 1):
+        #     actions[3] = Actions.GoToPointIgnore(u, 1)
+        #     if((field.allies[3].get_pos() - (u + field.allies[3].get_pos())).mag() < 20):
+        #         u = aux.rotate(u, 3.14/2 * 3)
+        #         self.i = 2
+        #     actions[3] = Actions.GoToPointIgnore(u, 1)
+        
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.allies[0].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.allies[1].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.allies[2].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.allies[3].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.allies[4].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.allies[5].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.enemies[0].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.enemies[1].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.enemies[2].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.enemies[3].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.enemies[4].get_pos())
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.enemies[5].get_pos())
+
+        list = [field.ally_goal.center_down, 
+                field.ally_goal.frw_down, 
+                field.ally_goal.frw, 
+                field.ally_goal.frw_up, 
+                field.ally_goal.center_up,
+                field.enemy_goal.center_down,
+                field.enemy_goal.frw_down,
+                field.enemy_goal.frw,
+                field.enemy_goal.frw_up,
+                field.enemy_goal.center_up,
+                ]
+        c = aux.find_nearest_point(field.allies[3].get_pos(), list)
         if(self.i == 0):
-            actions[3] = Actions.GoToPointIgnore(u + field.allies[3].get_pos(), 1)
-            if((field.allies[3].get_pos() - (u + field.allies[3].get_pos())).mag() < 20):
-                u = aux.rotate(d, 3.14/2 * 2)
+            actions[3] = Actions.GoToPointIgnore(field.ball.get_pos(), 1)
+            if((field.allies[3].get_pos() - field.ball.get_pos()).mag() < 100):
                 self.i = 1
         if(self.i == 1):
-            actions[3] = Actions.GoToPointIgnore(u, 1)
-            if((field.allies[3].get_pos() - (u + field.allies[3].get_pos())).mag() < 20):
-                u = aux.rotate(u, 3.14/2 * 3)
-                self.i = 2
-            actions[3] = Actions.GoToPointIgnore(u, 1)
+            actions[3] = Actions.GoToPointIgnore(c, 1)
+            if((field.allies[3].get_pos() - c).mag() < 10):
+                self.i = 0
+                # self.i = 1
+                # c = aux.dist(field.allies[3].get_pos(), field.ally_goal.center)
+                # d = aux.dist(field.allies[3].get_pos(), field.enemy_goal.center)
+                # if(self.i == 1):
+                #     if(c < d):
+                #         aux.find_nearest_point
+                #         actions[3] = Actions.GoToPointIgnore(field.ally_goal.center, 1)
+                #         if(field.allies[3].get_pos() - field.ally_goal.center).mag() < 250:
+                #             actions[3] = Actions.GoToPointIgnore(field.allies[3].get_pos(), 1)
+                #     else:
+                #         actions[3] = Actions.GoToPointIgnore(field.enemy_goal.center, 1)
+                #         if(field.allies[3].get_pos() - field.enemy_goal.center).mag() < 250:
+                #             actions[3] = Actions.GoToPointIgnore(field.allies[3].get_pos(), 1)
+
 
 
 
