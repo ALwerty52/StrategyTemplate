@@ -205,30 +205,52 @@ class Strategy:
         # else:
         #     actions[3] = Actions.GoToPointIgnore(u , (field.ball.get_pos() - field.allies[3].get_pos()).arg())
 
-        list2 = [field.enemies[0],
-                field.enemies[2],
-                field.enemies[3],
-                field.enemies[4],
-                field.enemies[5]]
+        # list2 = [field.enemies[0],
+        #         field.enemies[2],
+        #         field.enemies[3],
+        #         field.enemies[4],
+        #         field.enemies[5]]
         # while((field.allies[2].get_pos()- aux.Point(0,0)).mag() > 100):
         #     actions[2] = Actions.GoToPointIgnore(aux.Point(0,0), (field.ball.get_pos() - field.allies[2].get_pos()).arg())
-        field.strategy_image.draw_line(field.ball.get_pos(), field.allies[2].get_pos())
-        q = aux.dist(field.ball.get_pos(), field.allies[2].get_pos())
-        z = aux.point_on_line(field.ball.get_pos(), field.allies[2].get_pos(), q)
-        y = (field.ball.get_pos() - field.allies[2].get_pos()).unity()*50000
+
+        # field.strategy_image.draw_line(field.ball.get_pos(), field.allies[2].get_pos())
+        # q = aux.dist(field.ball.get_pos(), field.allies[2].get_pos())
+        # z = aux.point_on_line(field.ball.get_pos(), field.allies[2].get_pos(), q)
+        # y = (field.ball.get_pos() - field.allies[2].get_pos()).unity()*50000
+        # b = -1
+        # for b in range(6):
+        #     b+=1
+        #     if(aux.dist(aux.closest_point_on_line(field.ball.get_pos(), field.allies[2].get_pos(), field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 100):
+        #         e = aux.get_angle_between_points(field.allies[2].get_pos(), field.ball.get_pos(), field.enemies[b].get_pos())
+        #         if(e<0):
+        #             # while(aux.dist(aux.closest_point_on_line(field.ball.get_pos(), field.allies[2].get_pos(), field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 100):
+        #             actions[2] = Actions.GoToPointIgnore(aux.rotate(y, 3.14/2), (field.ball.get_pos() - field.allies[2].get_pos()).arg())
+        #             # actions[2] = Actions.GoToPointIgnore(field.allies[2].get_pos(), (field.ball.get_pos() - field.allies[2].get_pos()).arg())
+        #         else:
+        #             # while(aux.dist(aux.closest_point_on_line(field.ball.get_pos(), field.allies[2].get_pos(), field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 100):
+        #             actions[2] = Actions.GoToPointIgnore(aux.rotate(y, -3.14/2), (field.ball.get_pos() - field.allies[2].get_pos()).arg())
+        #             # actions[2] = Actions.GoToPointIgnore(field.allies[2].get_pos(), (field.ball.get_pos() - field.allies[2].get_pos()).arg())
+        # field.strategy_image.send_telemetry()
+
+        # actions[0] = Actions.Kick(field.ally_goal.center)
+        # actions[1] = Actions.Kick(field.enemy_goal.center)
+        # actions[2] = Actions.Kick(field.allies[0].get_pos())
+        # actions[3] = Actions.Kick(field.allies[1].get_pos())
+        # actions[2] = Actions.Kick(field.ally_goal.center)
         b = -1
-        for b in range(6):
+        p = field.enemy_goal.center_down + aux.Point(0, 500)
+        o = field.enemy_goal.center_up + aux.Point(0, -500)
+        for b in range(2):
             b+=1
-            if(aux.dist(aux.closest_point_on_line(field.ball.get_pos(), field.allies[2].get_pos(), field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 100):
-                e = aux.get_angle_between_points(field.allies[2].get_pos(), field.ball.get_pos(), field.enemies[b].get_pos())
-                if(e<0):
-                    # while(aux.dist(aux.closest_point_on_line(field.ball.get_pos(), field.allies[2].get_pos(), field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 100):
-                    actions[2] = Actions.GoToPointIgnore(aux.rotate(y, 3.14/2), (field.ball.get_pos() - field.allies[2].get_pos()).arg())
-                    # actions[2] = Actions.GoToPointIgnore(field.allies[2].get_pos(), (field.ball.get_pos() - field.allies[2].get_pos()).arg())
+            if(aux.dist(aux.closest_point_on_line(p, o, field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 1000):
+                l = aux.find_nearest_point(field.enemies[b].get_pos(), [p, o])
+                if(l == field.enemy_goal.center_down):
+                    actions[2] = Actions.Kick(o)
                 else:
-                    # while(aux.dist(aux.closest_point_on_line(field.ball.get_pos(), field.allies[2].get_pos(), field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 100):
-                    actions[2] = Actions.GoToPointIgnore(aux.rotate(y, -3.14/2), (field.ball.get_pos() - field.allies[2].get_pos()).arg())
-                    # actions[2] = Actions.GoToPointIgnore(field.allies[2].get_pos(), (field.ball.get_pos() - field.allies[2].get_pos()).arg())
+                    actions[2] = Actions.Kick(p)
+
+
+
             
                     
 
