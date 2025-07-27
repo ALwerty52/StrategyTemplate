@@ -277,7 +277,7 @@ class Strategy:
                 
                 actions[1] = Actions.GoToPoint(field.ally_goal.center, 1)
                 
-
+# 🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥
 def choose_on_goal(field: fld.Field, robots: int):
     while(l == 0):
         b = -1
@@ -292,6 +292,9 @@ def choose_on_goal(field: fld.Field, robots: int):
                     return o
                 elif(l == field.enemy_goal.center_up):
                     return p
+                
+
+                
     
             
             
