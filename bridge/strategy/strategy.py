@@ -253,45 +253,77 @@ class Strategy:
         # field.is_ball_moves_to_goal()
 
         if field.ally_color == const.Color.BLUE:
-            actions[2] = Actions.Kick(choose_on_goal(field, 2))
-            # b = -1
-            # p = field.enemy_goal.center_down + aux.Point(0, 500)
-            # o = field.enemy_goal.center_up + aux.Point(0, -500)
-            # for b in range(2):
-            #     b+=1
-            #     if(aux.dist(aux.closest_point_on_line(p, o, field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 1000):
-            #         l = aux.find_nearest_point(field.enemies[b].get_pos(), [p, o])
-            #         if(l == field.enemy_goal.center_down):
-            #             actions[2] = Actions.Kick(o)
-            #         else:
-            #             actions[2] = Actions.Kick(p)
+            # actions[2] = Actions.Kick(choose_on_goal(field, 2))
+            # field.strategy_image.draw_poly([field.enemy_goal.frw_down, field.enemy_goal.center_down, field.enemy_goal.frw_up, field.enemy_goal.center_up])
+            b = -1
+            p = field.enemy_goal.center_down + aux.Point(0, 500)
+            o = field.enemy_goal.center_up + aux.Point(0, -500)
+            for b in range(2):
+                b+=1
+                if(aux.dist(aux.closest_point_on_line(p, o, field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 1000):
+                    l = aux.find_nearest_point(field.enemies[b].get_pos(), [p, o])
+                    if(l == field.enemy_goal.center_down):
+                        actions[2] = Actions.Kick(o)
+                    else:
+                        actions[2] = Actions.Kick(p)
         else:
             # actions[2] = Actions.GoToPointIgnore(field.ally_goal.center, 1)
-            if(aux.is_point_inside_poly(field.allies[1].get_pos().unity(), [field.ally_goal.frw_down, field.ally_goal.center_down, field.ally_goal.frw_up, field.ally_goal.center_up])):
-                field.strategy_image.draw_line(field.ball.get_pos(),field.allies[1].get_pos())
-                d = aux.angle_to_point(field.enemies[2].get_pos(), field.ball.get_pos())
-                q = aux.rotate(aux.Point(300, 0), d).unity()
-                w = aux.closest_point_on_line(field.enemies[2].get_pos(), field.ball.get_pos(), field.allies[1].get_pos(), "L")
-                actions[1] = Actions.GoToPoint(w, d)
+            
+            if(aux.is_point_inside_poly(field.allies[1].get_pos(), field.ally_goal.hull)):
+                if(field.ball.get_vel() == 0):
+                    d = aux.angle_to_point(field.enemies[2].get_pos(), field.ball.get_pos())
+                    q = aux.rotate(aux.Point(300, 0), d).unity()
+                    w = aux.closest_point_on_line(field.enemies[2].get_pos(), field.ball.get_pos(), field.allies[1].get_pos(), "L")
+                    
+                    actions[1] = Actions.GoToPoint(w, d+3.14)
+                    
+                else:
+                    n = field.ball.get_vel().arg()
+                    actions[1] = Actions.GoToPoint(aux.rotate(aux.Point(200, 0), n+3.14).unity()*100 + field.allies[1].get_pos(), 1)
+
+                
+                
+                
             else:
                 
                 actions[1] = Actions.GoToPoint(field.ally_goal.center, 1)
+        class Attaker:
+            def __init__(self) -> None:
+                self.idx: int = 1
+            def func(self) -> None:
+                self.idx = "d"
+            def goalkeeper(self, ball_pos: aux.Point, num: int) -> tuple[rbt.Robot, aux.Point]:
+                pp = 0
+                pp += 1
+
+                numm: float
+                if pp == 0:
+                    numm = 1
+                else:
+                    numm = 1.5
+                numm += 1
+
+                return rbt.Robot(aux.Point(0, 0), 0, 0, const.Color.BLUE, 0), aux.Point(0, 0)
+                
+                    
                 
 # 🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥
-def choose_on_goal(field: fld.Field, robots: int):
-    while(l == 0):
-        b = -1
-        p = field.enemy_goal.center_down + aux.Point(0, 500)
-        o = field.enemy_goal.center_up + aux.Point(0, -500)
-        l = 0
-        for b in range(robots):
-            b+=1
-            if(aux.dist(aux.closest_point_on_line(p, o, field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 1000):
-                l = aux.find_nearest_point(field.enemies[b].get_pos(), [p, o])
-                if(l == field.enemy_goal.center_down):
-                    return o
-                elif(l == field.enemy_goal.center_up):
-                    return p
+# def choose_on_goal(field: fld.Field, robots: int):
+#     l = 0
+#     while(l == 0):
+#         b = -1
+#         p = field.enemy_goal.center_down + aux.Point(0, 500)
+#         o = field.enemy_goal.center_up + aux.Point(0, -500)
+        
+#         for b in range(robots):
+#             b+=1
+#             if(aux.dist(aux.closest_point_on_line(p, o, field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 5000):
+#                 l = aux.find_nearest_point(field.enemies[b].get_pos(), [p, o])
+#                 if(l == field.enemy_goal.center_down):
+#                     return o
+#                 elif(l == field.enemy_goal.center_up):
+#                     return p
+
                 
 
                 
