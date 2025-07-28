@@ -8,6 +8,7 @@ from bridge import const
 from bridge.auxiliary import aux, fld, rbt  # type: ignore
 from bridge.const import State as GameStates
 from bridge.router.base_actions import Action, Actions, KickActions  # type: ignore
+from bridge.strategy.AttakerNeymar import Attaker_Neymar
 
 
 class Strategy:
@@ -252,58 +253,64 @@ class Strategy:
 
         # field.is_ball_moves_to_goal()
 
-        if field.ally_color == const.Color.BLUE:
-            # actions[2] = Actions.Kick(choose_on_goal(field, 2))
-            # field.strategy_image.draw_poly([field.enemy_goal.frw_down, field.enemy_goal.center_down, field.enemy_goal.frw_up, field.enemy_goal.center_up])
-            b = -1
-            p = field.enemy_goal.center_down + aux.Point(0, 500)
-            o = field.enemy_goal.center_up + aux.Point(0, -500)
-            for b in range(2):
-                b+=1
-                if(aux.dist(aux.closest_point_on_line(p, o, field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 1000):
-                    l = aux.find_nearest_point(field.enemies[b].get_pos(), [p, o])
-                    if(l == field.enemy_goal.center_down):
-                        actions[2] = Actions.Kick(o)
-                    else:
-                        actions[2] = Actions.Kick(p)
-        else:
-            # actions[2] = Actions.GoToPointIgnore(field.ally_goal.center, 1)
+        # if field.ally_color == const.Color.BLUE:
+        #     # actions[2] = Actions.Kick(choose_on_goal(field, 2))
+        #     # field.strategy_image.draw_poly([field.enemy_goal.frw_down, field.enemy_goal.center_down, field.enemy_goal.frw_up, field.enemy_goal.center_up])
+        #     b = -1
+        #     p = field.enemy_goal.center_down + aux.Point(0, 500)
+        #     o = field.enemy_goal.center_up + aux.Point(0, -500)
+        #     for b in range(2):
+        #         b+=1
+        #         if(aux.dist(aux.closest_point_on_line(p, o, field.enemies[b].get_pos(), "S"), field.enemies[b].get_pos()) < 1000):
+        #             l = aux.find_nearest_point(field.enemies[b].get_pos(), [p, o])
+        #             if(l == field.enemy_goal.center_down):
+        #                 actions[2] = Actions.Kick(o)
+        #             else:
+        #                 actions[2] = Actions.Kick(p)
+        # else:
+        #     # actions[2] = Actions.GoToPointIgnore(field.ally_goal.center, 1)
             
-            if(aux.is_point_inside_poly(field.allies[1].get_pos(), field.ally_goal.hull)):
-                if(field.ball.get_vel() == 0):
-                    d = aux.angle_to_point(field.enemies[2].get_pos(), field.ball.get_pos())
-                    q = aux.rotate(aux.Point(300, 0), d).unity()
-                    w = aux.closest_point_on_line(field.enemies[2].get_pos(), field.ball.get_pos(), field.allies[1].get_pos(), "L")
+        #     if(aux.is_point_inside_poly(field.allies[1].get_pos(), field.ally_goal.hull)):
+        #         if(field.ball.get_vel() == 0):
+        #             d = aux.angle_to_point(field.enemies[2].get_pos(), field.ball.get_pos())
+        #             q = aux.rotate(aux.Point(300, 0), d).unity()
+        #             w = aux.closest_point_on_line(field.enemies[2].get_pos(), field.ball.get_pos(), field.allies[1].get_pos(), "L")
                     
-                    actions[1] = Actions.GoToPoint(w, d+3.14)
+        #             actions[1] = Actions.GoToPoint(w, d+3.14)
                     
-                else:
-                    n = field.ball.get_vel().arg()
-                    actions[1] = Actions.GoToPoint(aux.rotate(aux.Point(200, 0), n+3.14).unity()*100 + field.allies[1].get_pos(), 1)
+        #         else:
+        #             n = field.ball.get_vel().arg()
+        #             actions[1] = Actions.GoToPoint(aux.rotate(aux.Point(200, 0), n+3.14).unity()*100 + field.allies[1].get_pos(), 1)
 
                 
                 
                 
-            else:
+        #     else:
                 
-                actions[1] = Actions.GoToPoint(field.ally_goal.center, 1)
-        class Attaker:
-            def __init__(self) -> None:
-                self.idx: int = 1
-            def func(self) -> None:
-                self.idx = "d"
-            def goalkeeper(self, ball_pos: aux.Point, num: int) -> tuple[rbt.Robot, aux.Point]:
-                pp = 0
-                pp += 1
+        #         actions[1] = Actions.GoToPoint(field.ally_goal.center, 1)
+        # class Attaker:
+        #     def __init__(self) -> None:
+        #         self.idx: int = 1
+        #     def func(self) -> None:
+        #         self.idx = "d"
+        #     def goalkeeper(self, ball_pos: aux.Point, num: int) -> tuple[rbt.Robot, aux.Point]:
+        #         pp = 0
+        #         pp += 1
 
-                numm: float
-                if pp == 0:
-                    numm = 1
-                else:
-                    numm = 1.5
-                numm += 1
+        #         numm: float
+        #         if pp == 0:
+        #             numm = 1
+        #         else:
+        #             numm = 1.5
+        #         numm += 1
 
-                return rbt.Robot(aux.Point(0, 0), 0, 0, const.Color.BLUE, 0), aux.Point(0, 0)
+        #         return rbt.Robot(aux.Point(0, 0), 0, 0, const.Color.BLUE, 0), aux.Point(0, 0)
+
+        # actions[2] = Attaker_Neymar.Pass_Ronaldo(field.allies[0].get_pos())
+        if field.ally_color == const.Color.BLUE:
+            Attaker_Neymar.run_Neymar(field, actions)
+
+
                 
                     
                 

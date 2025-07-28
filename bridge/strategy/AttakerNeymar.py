@@ -1,6 +1,24 @@
+# !v DEBUG ONLY
+import math  # type: ignore
+from time import time  # type: ignore
+from typing import Optional
+from bridge import const
+from bridge.auxiliary import aux, fld, rbt  # type: ignore
+from bridge.const import State as GameStates
+from bridge.router.base_actions import Action, Actions, KickActions, get_pass_voltage  # type: ignore
+
 class Attaker_Neymar:
-    def __init__(self) -> None:
-        self.idx: int = 1
-    def __start_pos__(self) -> None:
+    def __init__(self, ) -> None:
+        self.idxgk: int = 1
+        self.idxR: int = 0
+        self.idxN: int = 2
+
+    def pass_Ronaldo(self, field: fld.Field, actions: list[Optional[Action]]) -> None:
+        actions[self.idxN] = KickActions.Straight(field.allies[self.idxR].get_pos(), get_pass_voltage(aux.dist(field.allies[self.idxN].get_pos(), field.allies[self.idxR].get_pos())))
+        
+    # def Grab_Ronaldo(self, field: fld.Field, actions: list[Optional[Action]]) -> None:
+    #     actions[self.idxN] = Actions.BallGrab()
+    def run_Neymar(self, field: fld.Field, actions: list[Optional[Action]]) -> None:
+        self.pass_Ronaldo(field, actions)
         
 
