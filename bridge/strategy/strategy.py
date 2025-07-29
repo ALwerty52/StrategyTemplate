@@ -61,7 +61,7 @@ class Strategy:
 
     def run(self, field: fld.Field, actions: list[Optional[Action]]) -> None:
         if field.ally_color == const.Color.BLUE:
-            self.neymar.run_Neymar(field, actions)
+            self.neymar.choose_point_to_goal(field, actions)
 
 
                 
